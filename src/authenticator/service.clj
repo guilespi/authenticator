@@ -28,7 +28,9 @@
 
 (defprotocol Authenticator
   (generate-token [this id] "Creates a temporary token given an identifier")
-  (resolve-token [this token] "Given a token returns related identifier"))
+  (resolve-token [this token] "Given a token returns related identifier")
+  (read-token [this token] "Returns token identifier without removal")
+  (clear-token [this token] "Deletes token reference"))
 
 
 (defrecord AuthComponent
@@ -61,7 +63,15 @@
   (resolve-token [this token]
     (when-let [id (get-key this auth-ns token)]
       (del! this auth-ns token)
-      id)))
+      id))
+
+  (read-token [this token]
+    (get-key this auth-ns token))
+
+  (clear-token [this token]
+    (del! this auth-ns token))
+
+)
 
 (defn make
   "Creates an authenticator component"

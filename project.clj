@@ -1,4 +1,4 @@
-(defproject afis.authenticator "0.1.0"
+(defproject afis.authenticator "0.1.1"
   :description "Authenticator Component"
   :url ""
   :license {:name "Eclipse Public License"
